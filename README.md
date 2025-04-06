@@ -4,6 +4,12 @@
 
 Ideal for traders, quants, and data scientists who need low-latency, high-integrity insights extracted from price/volume data.
 
+## Quick Install & Run (Requires [Rust](https://www.rust-lang.org/tools/install))
+
+```bash
+cargo install quant_marketstat_ws
+quant_marketstat_ws
+```
 ---
 
 ## Features
