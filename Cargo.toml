@@ -1,6 +1,6 @@
 [package]
 name = "quant_marketstat_ws"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 authors = ["Willy Sajbeni <willy@searchupunk.com>"]
 description = "Ferramentas de análise quantitativa com Rust para mercados financeiros."
