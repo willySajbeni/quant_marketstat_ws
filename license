@@ -1,0 +1,23 @@
+🧑‍💻 Author
+
+Built by Willy Sajbeni - https://www.searchupunk.com
+
+    Quantitative AI & Algorithmic Research
+    Linux • Rust • Python • Mathematical Finance
+
+---
+
+## 🧾 2. LICENSE (MIT) – Crie o arquivo `LICENSE`
+
+**Local:** na raiz do projeto, arquivo chamado **`LICENSE`** (sem extensão).
+
+```text
+MIT License
+
+Copyright (c) 2025 Willy Sajbeni
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction...
+
+[⚠️ O texto é longo — posso colar tudo se quiser, ou você pode gerar com `cargo new --license mit`]
