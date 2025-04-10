@@ -20,14 +20,15 @@ quant_marketstat_ws
 - ✔️ Variance (Sample & Population)  
 - ✔️ Standard Deviation (STD)  
 - ✔️ VWAP Variance & VWAP STD  
-- ✔️ Group VWAP Variance & STD  
+- ✔️ Group VWAP Variance & STD
+- ✔️ Profit & Loss Calculation (P&L Summary)  
 - 📈 Global Summary with human-readable interpretations  
 - 📂 CSV Data Import (Option 11)  
 - 🦀 Built in pure Rust — fast, safe, and lightweight
 
 ---
 
-## 🧪 CLI Menu Preview
+## CLI Menu Preview
 
 ```
 Choose a function:
@@ -40,8 +41,9 @@ Choose a function:
 7 - VWAP STD
 8 - VWAP Group Variance
 9 - VWAP Group STD
-10 - Full Market Stats Report (Global Summary)
-11 - Load data from CSV (Bid, Ask, Volume)
+10 - Profit & Loss Calculation (P&L Summary)
+11 - Full Market Stats Report (Global Summary)
+12 - Load data from CSV (Bid, Ask, Volume)
 ```
 
 ---
@@ -68,17 +70,6 @@ Bid,Ask,Volume
 - You can type `x` to cancel if you change your mind
 - The system loops until a valid file is found
 
----
-
-## Installation & Run (Requires [Rust](https://www.rust-lang.org/tools/install))
-
-```bash
-git clone https://github.com/willySajbeni/quant_marketstat_ws
-cd quant_marketstat_ws
-cargo run
-```
-
----
 
 ## License
 

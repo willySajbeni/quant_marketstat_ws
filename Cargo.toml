@@ -1,11 +1,16 @@
 [package]
-name = "quant_marketstat_ws"
-version = "0.1.1"
-edition = "2021"
+name = "quant_marketstat_ws"      # precisa ser único no crates.io
+version = "0.1.4"
 authors = ["Willy Sajbeni <willy@searchupunk.com>"]
-description = "Ferramentas de análise quantitativa com Rust para mercados financeiros."
+edition = "2021"
 license = "MIT"
+description = "A Rust-based CLI app for quantitative financial analysis (VWAP, STD, etc)"
+repository = "https://github.com/willysajbeni/quant_marketstat_ws"
+readme = "README.md"
+keywords = ["finance", "quant", "vwap", "cli", "statistics"]
+categories = ["command-line-utilities", "science", "finance"]
 
 
 [dependencies]
 csv = "1.1"
+

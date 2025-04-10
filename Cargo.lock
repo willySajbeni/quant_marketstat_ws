@@ -45,8 +45,8 @@ dependencies = [
 ]
 
 [[package]]
-name = "quant_math_sajbeni_rs"
-version = "0.1.0"
+name = "quant_marketstat_ws"
+version = "0.1.4"
 dependencies = [
  "csv",
 ]
