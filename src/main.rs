@@ -1,7 +1,10 @@
-mod stats;
-mod csv_loader;
-mod analyze_csv;
+mod stats; // <-- isso diz ao Rust: "existe um arquivo chamado stats.rs aqui"
+mod csv_loader; // <-- isso diz ao Rust: "existe um arquivo chamado csv_loader.rs aqui"
+mod analyze_csv; // <-- isso diz ao Rust: "existe um arquivo chamado analyze_csv.rs aqui"
+mod pnl; // <-- isso diz ao Rust: "existe um arquivo chamado pnl.rs aqui"
 use analyze_csv::analyze_csv;
+use pnl::{AssetPosition, calculate_pnl};
+
 
 use std::io;
 
@@ -23,16 +26,18 @@ fn main() {
     println!("Quantitative Market Analyzer - by Willy Sajbeni\n");
     println!("Choose a function:");
     println!("1 - Mean");
-    println!("2 - VWAP");
-    println!("3 - VWAP Group (Compra + Venda / 2)");
+    println!("2 - VWAP (Volume Weighted Average Price)");
+    println!("3 - VWAP Group (Bid + Ask) / 2");
     println!("4 - Variance (Population or Sample)");
     println!("5 - Standard Deviation (Population or Sample)");
     println!("6 - VWAP Variance (Population or Sample)");
     println!("7 - VWAP Standard Deviation (Population or Sample)");
-    println!("8 - VWAP Group Variance (Compra, Venda, Volume)");
-    println!("9 - VWAP Group STD (Compra, Venda, Volume)");
-    println!("10 - Full Market Stats Report (Global Summary)");
-    println!("11 - Load data from CSV file (Bid, Ask, Volume columns)");
+    println!("8 - VWAP Group Variance (Bid, Ask, Volume)");
+    println!("9 - VWAP Group STD (Bid, Ask, Volume)");
+    println!("10 - Profit & Loss Calculation (P&L Summary)");
+    println!("11 - Full Market Stats Report (Global Summary)");
+    println!("12 - Load data from CSV file (Bid, Ask, Volume columns)");
+    
 
 
 
@@ -71,7 +76,7 @@ fn main() {
             let volumes = read_and_parse_input("volumes");
 
             if bids.len() != asks.len() || bids.len() != volumes.len() {
-                println!("Compra, venda e volume devem ter o mesmo tamanho.");
+                println!("Prices and volumes must have the same length.");
                 return;
             }
 
@@ -191,6 +196,46 @@ fn main() {
         }
 
         "10" => {
+            let buy_prices = read_and_parse_input("buy prices");
+            let sell_prices = read_and_parse_input("sell prices");
+            let volumes = read_and_parse_input("contracted volumes(amount)");
+            let market_prices = read_and_parse_input("market prices(price at time of analysis)");
+            let realized_volumes = read_and_parse_input("realized volumes(shares sold) (optional, press Enter to skip)");
+            let costs = read_and_parse_input("additional costs(Brokerage, fees, emoluments, slippage, financing, taxes, etc.) (optional, press Enter to skip)");
+
+            let len = buy_prices.len();
+
+            if sell_prices.len() != len || volumes.len() != len || market_prices.len() != len {
+                println!("All required inputs must have the same number of elements.");
+                return;
+            }
+
+            for i in 0..len {
+                let realized = realized_volumes.get(i).copied();
+                let extra_costs = costs.get(i).copied().unwrap_or(0.0);
+
+                let pos = AssetPosition {
+                    asset_id: format!("Asset_{}", i + 1),
+                    buy_price: buy_prices[i],
+                    sell_price: sell_prices[i],
+                    contracted_volume: volumes[i],
+                    realized_volume: realized,
+                    market_price: market_prices[i],
+                    additional_costs: extra_costs,
+                };
+
+                let result = calculate_pnl(&pos);
+
+                println!("\n--- P&L Result for {} ---", pos.asset_id);
+                println!("Revenue       : {:.2}", result.revenue);
+                println!("Cost          : {:.2}", result.cost);
+                println!("Exposure      : {:.2}", result.exposure);
+                println!("Total P&L     : {:.2}", result.pnl);
+            }
+        }
+
+
+        "11" => {
             let bids = read_and_parse_input("bid prices (compra)");
             let asks = read_and_parse_input("ask prices (venda)");
             let volumes = read_and_parse_input("volumes");
@@ -203,7 +248,7 @@ fn main() {
             stats::global_stats_summary(&bids, &asks, &volumes);
         }
 
-        "11" => {
+        "12" => {
             println!("\nYou selected: Import CSV for VWAP Group Analysis.");
             println!("Your CSV should contain three columns:");
             println!(" 1. Bid prices (Compra)");
